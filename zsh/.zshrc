@@ -77,9 +77,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sudo web-search copypath jsontools zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git sudo web-search copypath jsontools zsh-syntax-highlighting zsh-autosuggestions fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
+
+# Key bindings
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
 
 # User configuration
 
@@ -115,6 +120,9 @@ export NVM_DIR=~/.nvm
  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
+
+# Aliases
+alias ls='ls --color'
 alias lg='lazygit' 
 alias python='python3'
 alias tmux='tmux -u'
@@ -127,3 +135,21 @@ export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# History settings
+HISTFILE=~/.zsh_history
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
