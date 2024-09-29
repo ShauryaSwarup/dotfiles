@@ -126,11 +126,14 @@ alias ls='ls --color'
 alias lg='lazygit' 
 alias python='python3'
 alias tmux='tmux -u'
+alias cd='z'
+alias cdi='zi'
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH=$PATH:~/.local/bin/nvim
 export PATH=$PATH:/opt/apache-jmeter-5.6.3/bin
 export PATH=/usr/local/cuda-12.4/bin:/home/shaun/.nvm/versions/node/v20.8.0/bin:/home/shaun/.local/bin/:/home/shaun/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/shaun/.go/bin:/home/shaun/.local/bin/nvim:/opt/apache-jmeter-5.6.3/bin
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -153,3 +156,5 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+
+eval "$(zoxide init zsh)"

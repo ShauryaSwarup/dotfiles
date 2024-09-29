@@ -25,6 +25,12 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 -- keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
 -- keymap.set("n", "<Leader>t", ":NvimTreeToggle<Return>", opts)
 
+-- Competitest
+keymap.set("n", "<Leader>cprc", ":CompetiTest receive contest<Return>", opts)
+keymap.set("n", "<Leader>cprp", ":CompetiTest receive problem<Return>", opts)
+keymap.set("n", "<Leader>cps", ":CompetiTest run<Return>", opts)
+keymap.set("n", "<Leader>cpu", ":CompetiTest show_ui<Return>", opts)
+
 -- Tabs
 keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)

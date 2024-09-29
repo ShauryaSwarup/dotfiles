@@ -16,18 +16,18 @@ return {
       },
       --  show hidden files by default
       filesystem = {
+        follow_current_file = {
+          enabled = true,
+          leave_dirs_open = false,
+        },
         filtered_items = {
           --visible = true,
           hide_dotfiles = false,
           hide_gitignored = false,
-          hide_by_name = {
-            ".github",
-            ".gitignore",
-            "package-lock.json",
-          },
           never_show = { ".git" },
         },
       },
+      buffers = { follow_current_file = { enable = true } },
       window = {
         mappings = {
           ["<space>"] = "none",
