@@ -112,7 +112,7 @@ bindkey '^n' history-search-forward
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-
+ulimit -s unlimited
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 PATH="/home/shaun/.local/bin/:$PATH"
@@ -134,6 +134,7 @@ export PATH=$PATH:~/.local/bin/nvim
 export PATH=$PATH:/opt/apache-jmeter-5.6.3/bin
 export PATH=/usr/local/cuda-12.4/bin:/home/shaun/.nvm/versions/node/v20.8.0/bin:/home/shaun/.local/bin/:/home/shaun/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/shaun/.go/bin:/home/shaun/.local/bin/nvim:/opt/apache-jmeter-5.6.3/bin
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export PATH=$PATH:~/scripts/
 export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
