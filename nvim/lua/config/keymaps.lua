@@ -6,6 +6,8 @@ local opts = { noremap = true, silent = true }
 
 keymap.set("n", "x", '"_x')
 
+keymap.set("n", "<C-_>", "<cmd>ToggleTerm<cr>", opts)
+
 -- Escape using jk
 keymap.set("i", "jk", "<Esc>", opts)
 

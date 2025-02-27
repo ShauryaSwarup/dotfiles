@@ -16,19 +16,19 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = "catppuccin",
+        colorscheme = "blue",
         news = {
           lazyvim = true,
           neovim = true,
         },
       },
     },
-    { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+    -- { import = "lazyvim.plugins.extras.linting.eslint" },
+    { import = "lazyvim.plugins.extras.formatting.prettier", lazy = true },
+    { import = "lazyvim.plugins.extras.lang.typescript", lazy = true },
+    { import = "lazyvim.plugins.extras.lang.json", lazy = true },
+    { import = "lazyvim.plugins.extras.lang.tailwind", lazy = true },
+    { import = "lazyvim.plugins.extras.util.mini-hipatterns", lazy = true },
     { import = "plugins" },
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
   },
@@ -39,7 +39,7 @@ require("lazy").setup({
   dev = {
     path = "~/.ghq/github.com",
   },
-  checker = { enabled = true },
+  checker = { enabled = false },
   performance = {
     cache = {
       enabled = true,
@@ -47,8 +47,8 @@ require("lazy").setup({
     rtp = {
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
+        "matchit",
+        "matchparen",
         "netrwPlugin",
         "rplugin",
         "tarPlugin",

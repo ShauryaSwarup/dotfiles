@@ -29,6 +29,7 @@ return {
       },
       buffers = { follow_current_file = { enable = true } },
       window = {
+        width = 25,
         mappings = {
           ["<space>"] = "none",
           ["s"] = "none",
