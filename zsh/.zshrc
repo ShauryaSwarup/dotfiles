@@ -77,9 +77,27 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sudo web-search copypath jsontools zsh-syntax-highlighting zsh-autosuggestions fzf-tab)
+plugins=(git sudo jsontools zsh-syntax-highlighting zsh-autosuggestions fzf-tab)
+
+# Lazy-load zsh-autosuggestions
+zsh_autosuggest_lazy_load() {
+  source /path/to/zsh-autosuggestions.zsh
+}
+zle-line-init() {
+  zsh_autosuggest_lazy_load
+  zle autosuggest-start
+}
+zle -N zle-line-init
 
 source $ZSH/oh-my-zsh.sh
+
+# Optimize compinit
+autoload -Uz compinit
+if [[ -n "${ZDOTDIR}/.zcompdump(#qN.mh+24)" ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # Key bindings
 bindkey -e
@@ -116,12 +134,11 @@ ulimit -s unlimited
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 PATH="/home/shaun/.local/bin/:$PATH"
-export NVM_DIR=~/.nvm
- [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
 # Aliases
+alias btop="btop --utf-force"
 alias ls='ls --color'
 alias lg='lazygit' 
 alias python='python3'
@@ -129,13 +146,44 @@ alias tmux='tmux -u'
 alias cd='z'
 alias cdi='zi'
 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH=$PATH:~/.local/bin/nvim
-export PATH=$PATH:/opt/apache-jmeter-5.6.3/bin
-export PATH=/usr/local/cuda-12.4/bin:/home/shaun/.nvm/versions/node/v20.8.0/bin:/home/shaun/.local/bin/:/home/shaun/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/shaun/.go/bin:/home/shaun/.local/bin/nvim:/opt/apache-jmeter-5.6.3/bin
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-export PATH=$PATH:~/scripts/
-export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64
+# Lazy-load nvm
+lazy_load_nvm() {
+  unset -f nvm node npm
+  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+
+nvm() {
+  lazy_load_nvm
+  nvm "$@"
+}
+
+node() {
+  lazy_load_nvm
+  node "$@"
+}
+
+npm() {
+  lazy_load_nvm
+  npm "$@"
+}
+
+export PATH="$PATH:~/.local/bin/nvim"
+if [ -d "/usr/local/cuda-12.6/bin" ]; then
+    export PATH="$PATH:/usr/local/cuda-12.6/bin"
+fi
+if [ -d "/usr/local/go/bin" ]; then
+    export PATH="$PATH:/usr/local/go/bin"
+fi
+if [ -d "$HOME/go/bin" ]; then
+    export PATH="$PATH:$HOME/go/bin"
+elif [ -d "$HOME/.go/bin" ]; then
+    export PATH="$PATH:$HOME/.go/bin"
+fi
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$PATH:~/scripts/"
+export LD_LIBRARY_PATH="/usr/local/cuda-12.4/lib64"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -159,3 +207,6 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 eval "$(zoxide init zsh)"
+
+# Initialize direnv - added by PostHog's Flox activation hook (../posthog/.flox/env/manifest.toml)
+eval "$(direnv hook zsh)"
